@@ -1,0 +1,8 @@
+node_modules/
+public/style/custom-bootstrap.css.map
+public/style/style.css.map
+public/style/style.scss
+
+server/db/database.sqlite
+
+notes.txt
