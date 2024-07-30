@@ -9,10 +9,16 @@
     z-index: 1000;
 }
 
+.arrow-left-icon {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+  }
+
 .image-container {
     position: relative;
     width: 100%;
-    height: 25vh;
+    height: 30vh;
     overflow: hidden;
 }
 
@@ -33,19 +39,26 @@
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #1c1c1c);
 }
 
+.cover-poster {
+    margin-top: -20px;
+}
+
+.flag {
+    width: 30px;
+}
+
 .img-rating {
     max-width: 30px;
     height: auto; 
     margin-right: 5px;
 }
 
+.cast-label {
+    max-width: 150px;
+    min-width: 100px;
+}
+
 .movie-footer {
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #1c1c1c 50%);
     height: 12vh; 
-}
-
-.arrow-left-icon {
-  width: 24px;
-  height: 24px;
-  display: inline-block;
 }

@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="style/style.css">
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
 
-
     <script type="module">
         import 'https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js';
         import { app } from './js/app.js';
@@ -111,19 +110,26 @@
                         <div class="gradient-overlay"></div>
                     </div>
 
+                    <!-- Main information -->
                     <div class="container">
                         <div class="row">
                             <div class="col-8">
-                                <h1 class="display-6 mt-4" x-text="currentMovie.title"></h1>
-                                <p class="small text-secondary-emphasis">DIRECTED BY <strong
-                                        x-text="currentMovie.director"></strong></p>
+                                <h1 class="display-6" x-text="currentMovie.title"></h1>
+                                <p class="small text-secondary-emphasis">
+                                    DIRECTED BY <strong x-text="currentMovie.director"></strong>
+                                </p>
                                 <p>
                                     <span x-text="currentMovie.year"></span> ・
-                                    <span x-text="formatDuration(currentMovie.duration)"></span>
+                                    <span x-text="formatDuration(currentMovie.duration)"></span><br />
+                                    <template x-for="name in currentMovie.countries" :key="name">
+                                        <img x-show="name" :src="getCountryIcon(name)" :alt="`${name} flag`"
+                                            class="m-0 flag">
+                                    </template>
                                 </p>
                             </div>
-                            <div class="col-4">
-                                <img :src="currentMovie.images.coverPoster" class="img-fluid rounded" alt="cover">
+                            <div class="col-4 ps-0">
+                                <img :src="currentMovie.images.coverPoster"
+                                    class="img-fluid rounded position-relative cover-poster" alt="cover">
                             </div>
                         </div>
 
@@ -151,6 +157,18 @@
                         <p class="text-uppercase text-secondary-emphasis" x-text="currentMovie.tagline"></p>
                         <p x-text="currentMovie.summary250 ? currentMovie.summary250 : currentMovie.summary">
                         </p>
+
+                        <h5>Casting</h5>
+                        <div class="row">
+                            <template x-for="cast in currentMovie.casting" :key="cast.id">
+                                <div class="col d-flex justify-content-center flex-wrap w-25 text-center">
+                                    <img class="rounded-circle w-100" :alt="cast.thumb" :src="cast.thumb" />
+                                    <small class="d-inline-block text-truncate cast-label" x-text="cast.name"></small>
+                                    <small class="d-inline-block text-truncate text-secondary cast-label"
+                                        x-text="cast.role"></small>
+                                </div>
+                            </template>
+                        </div>
                     </div>
                 </div>
 
@@ -200,18 +218,18 @@
 
     <!-- End of votes message (waiting, matching, failing, etc.) -->
     <section x-show="endOfVotesInfo.isDisplayed" class="min-vh-100">
-    
+
         <div class="back-arrow">
             <a href="#" @click="endOfVotesInfo.isDisplayed = false" class="link-light">
                 <img src="assets/icons/arrow-left.svg" alt="arrow-left" class="arrow-left-icon">
             </a>
         </div>
-    
+
         <div class="image-container">
             <img :src="endOfVotesInfo.cover" alt="cover">
             <div class="gradient-overlay"></div>
         </div>
-    
+
         <div class="container pt-4 text-center">
             <h1 class="display-1" x-text="endOfVotesInfo.headline"></h1>
             <p class="lead mt-4 text-start" x-text="endOfVotesInfo.message"></p>
@@ -226,11 +244,13 @@
             <div class="container fixed-bottom mb-4" x-show="endOfVotesInfo.id !== 'match'">
                 <div class="d-grid gap-2">
 
-                    <button class="btn btn-primary" type="button" @click="restartUserVoting" x-show="endOfVotesInfo.id === 'no-upvotes'">
+                    <button class="btn btn-primary" type="button" @click="restartUserVoting"
+                        x-show="endOfVotesInfo.id === 'no-upvotes'">
                         Vote again
                     </button>
 
-                    <button class="btn btn-primary" type="button" @click="restartVoting" x-show="endOfVotesInfo.id === 'no-match'">
+                    <button class="btn btn-primary" type="button" @click="restartVoting"
+                        x-show="endOfVotesInfo.id === 'no-match'">
                         Restart voting
                     </button>
 
@@ -240,7 +260,7 @@
                 </div>
             </div>
         </div>
-    
+
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

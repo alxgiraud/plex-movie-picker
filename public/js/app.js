@@ -1,7 +1,9 @@
 import * as api from './api.js';
+import { countryCodes } from './utils.js';
+import Fuse from './fuse.js'
+
 
 export const app = () => {
-
     const API_URL = '/api/movies';
 
     const waitingInfo = {
@@ -351,6 +353,19 @@ export const app = () => {
 
         /* Format functions for display */
 
+        getCountryIcon(name) {
+
+            const fuseOptions = { keys: ['name'] };
+            const fuse = new Fuse(countryCodes, fuseOptions);
+            const result = fuse.search(name);            
+            const country = result.length > 0 ? result[0].item.image : null;
+            
+            if (!country) {
+                console.log(`No country flag found for: ${name}`);
+            }
+            
+            return country;
+        },
         stringifyDuration(duration) {
             return JSON.stringify({
                 min: duration.min,

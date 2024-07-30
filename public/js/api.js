@@ -170,6 +170,16 @@ export const fetchMovieDetails = async (guid) => {
 
         const guids = getAllNodes("Guid").map(guid => getAttr(guid, "id"));
         const countries = getAllNodes("Country").map(country => getAttr(country, "tag"));
+
+        const casting = getAllNodes("Role").map(role => ({
+            id: role.getAttribute("id"),
+            order: parseInt(role.getAttribute("order")),
+            name: role.getAttribute("tag"),
+            thumb: role.getAttribute("thumb"),
+            role: role.getAttribute("role")
+        }));
+        casting.sort((a, b) => a.order - b.order);
+
         const director = getAttr(getNode("Director"), "tag");
 
         const summaries = {
@@ -191,6 +201,7 @@ export const fetchMovieDetails = async (guid) => {
             ratings,
             guids,
             countries,
+            casting: casting.slice(0, 3),
             director,
             ...summaries,
         };
